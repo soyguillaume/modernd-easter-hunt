@@ -3,26 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ModernD Centre — Easter Egg Hunt</title>
+<title>ModernD Game</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --hager-red: #E2001A;
-    --purple: #5a2a83;
-    --purple-light: #7c3aad;
-    --purple-soft: #ede7f6;
+    --primary: #0078c3;
+    --primary-dark: #002841;
+    --primary-mid: #004673;
+    --primary-light: #8ccdfa;
+    --primary-pale: #dcf0ff;
     --gold: #f59e0b;
     --gold-soft: #fef3c7;
     --green: #059669;
-    --blue: #0ea5e9;
-    --bg: #f8f7fc;
+    --bg: #f0f7ff;
     --card: #ffffff;
-    --text: #1e1b2e;
-    --text-muted: #6b7280;
-    --border: #e5e7eb;
+    --text: #002841;
+    --text-muted: #4a6b8a;
+    --border: #c8e4f8;
     --radius: 20px;
-    --shadow: 0 4px 24px rgba(90,42,131,0.10);
-    --shadow-lg: 0 8px 40px rgba(90,42,131,0.18);
+    --shadow: 0 4px 24px rgba(0,120,195,0.10);
+    --shadow-lg: 0 8px 40px rgba(0,40,65,0.14);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -36,7 +37,7 @@
 
   /* ── HEADER ── */
   .header {
-    background: linear-gradient(135deg, var(--purple) 0%, #2d1356 100%);
+    background: linear-gradient(135deg, #002841 0%, #004673 100%);
     padding: 0 32px;
     position: sticky;
     top: 0;
@@ -45,7 +46,7 @@
     align-items: center;
     justify-content: space-between;
     height: 64px;
-    box-shadow: 0 2px 20px rgba(0,0,0,0.25);
+    box-shadow: 0 2px 20px rgba(0,40,65,0.35);
   }
   .header-brand {
     display: flex;
@@ -53,15 +54,13 @@
     gap: 12px;
   }
   .header-logo {
-    width: 32px; height: 32px;
-    background: var(--hager-red);
-    border-radius: 8px;
+    height: 32px;
     display: flex; align-items: center; justify-content: center;
-    font-family: 'Nunito', sans-serif;
-    font-weight: 900;
-    color: white;
-    font-size: 13px;
-    letter-spacing: -0.5px;
+  }
+  .header-logo img {
+    height: 28px;
+    width: auto;
+    filter: brightness(0) invert(1);
   }
   .header-title {
     font-family: 'Nunito', sans-serif;
@@ -70,7 +69,7 @@
     color: white;
     letter-spacing: -0.3px;
   }
-  .header-title span { color: #c4b5fd; }
+  .header-title span { color: #8ccdfa; }
   .header-pill {
     background: rgba(255,255,255,0.12);
     border: 1px solid rgba(255,255,255,0.2);
@@ -121,14 +120,14 @@
   }
   .progress-bar-bg {
     flex: 1;
-    background: var(--purple-soft);
+    background: var(--primary-pale);
     border-radius: 999px;
     height: 10px;
     overflow: hidden;
   }
   .progress-bar-fill {
     height: 100%;
-    background: linear-gradient(90deg, var(--purple), var(--purple-light));
+    background: linear-gradient(90deg, #0078c3, #8ccdfa);
     border-radius: 999px;
     transition: width 0.6s cubic-bezier(.4,0,.2,1);
     width: 0%;
@@ -176,14 +175,14 @@
     border-radius: 50%;
     background: rgba(255,255,255,0.08);
   }
-  .page-band.purple  { background: linear-gradient(135deg, var(--purple), #2d1356); }
+  .page-band.purple  { background: linear-gradient(135deg, #002841, #004673); }
   .page-band.red     { background: linear-gradient(135deg, #c0392b, #e2001a); }
   .page-band.green   { background: linear-gradient(135deg, #065f46, #059669); }
-  .page-band.blue    { background: linear-gradient(135deg, #0c4a6e, #0ea5e9); }
-  .page-band.teal    { background: linear-gradient(135deg, #134e4a, #0d9488); }
+  .page-band.blue    { background: linear-gradient(135deg, #004673, #0078c3); }
+  .page-band.teal    { background: linear-gradient(135deg, #004673, #0078c3); }
   .page-band.orange  { background: linear-gradient(135deg, #92400e, #f59e0b); }
-  .page-band.indigo  { background: linear-gradient(135deg, #312e81, #6366f1); }
-  .page-band.violet  { background: linear-gradient(135deg, #4c1d95, #8b5cf6); }
+  .page-band.indigo  { background: linear-gradient(135deg, #002841, #0078c3); }
+  .page-band.violet  { background: linear-gradient(135deg, #002841, #004673); }
   .page-band.pink    { background: linear-gradient(135deg, #831843, #ec4899); }
   .page-band.gray    { background: linear-gradient(135deg, #374151, #6b7280); }
 
@@ -232,10 +231,10 @@
   .story-text strong { color: var(--text); }
   .story-quote {
     font-style: italic;
-    color: var(--purple);
+    color: var(--primary-mid);
     font-size: 15px;
     line-height: 1.7;
-    border-left: 3px solid var(--purple-light);
+    border-left: 3px solid var(--primary);
     padding-left: 16px;
     margin: 18px 0;
   }
@@ -289,7 +288,7 @@
     border-radius: 999px;
     transition: all 0.2s;
   }
-  .tip-link:hover { background: #5a2a83; color: white; border-color: #5a2a83; transform: translateY(-1px); }
+  .tip-link:hover { background: #0078c3; color: white; border-color: #0078c3; transform: translateY(-1px); }
 
   /* ── DIVIDER ── */
   .divider {
@@ -327,16 +326,16 @@
     font-family: 'Sora', sans-serif;
   }
   .choice-btn:hover {
-    border-color: var(--purple);
-    background: var(--purple-soft);
+    border-color: var(--primary);
+    background: var(--primary-pale);
     transform: translateX(4px);
-    box-shadow: 0 4px 16px rgba(90,42,131,0.12);
+    box-shadow: 0 4px 16px rgba(0,120,195,0.15);
   }
   .choice-letter {
     width: 32px; height: 32px;
     border-radius: 50%;
-    background: var(--purple-soft);
-    color: var(--purple);
+    background: var(--primary-pale);
+    color: var(--primary);
     font-family: 'Nunito', sans-serif;
     font-weight: 900;
     font-size: 14px;
@@ -345,7 +344,7 @@
     transition: background 0.2s, color 0.2s;
   }
   .choice-btn:hover .choice-letter {
-    background: var(--purple);
+    background: var(--primary);
     color: white;
   }
   .choice-body {}
@@ -384,8 +383,8 @@
     gap: 8px;
     padding: 10px 20px;
     border-radius: 999px;
-    border: 2px solid var(--purple);
-    color: var(--purple);
+    border: 2px solid var(--primary);
+    color: var(--primary);
     background: white;
     font-family: 'Sora', sans-serif;
     font-size: 13px;
@@ -394,7 +393,7 @@
     transition: all 0.2s;
     margin-top: 10px;
   }
-  .back-btn:hover { background: var(--purple); color: white; }
+  .back-btn:hover { background: var(--primary); color: white; }
 
   .restart-btn {
     display: inline-flex;
@@ -402,7 +401,7 @@
     gap: 8px;
     padding: 14px 28px;
     border-radius: 999px;
-    background: linear-gradient(135deg, var(--purple), var(--purple-light));
+    background: linear-gradient(135deg, #002841, #0078c3);
     color: white;
     font-family: 'Nunito', sans-serif;
     font-size: 15px;
@@ -410,10 +409,10 @@
     cursor: pointer;
     border: none;
     transition: all 0.2s;
-    box-shadow: 0 4px 20px rgba(90,42,131,0.3);
+    box-shadow: 0 4px 20px rgba(0,120,195,0.35);
     margin-top: 16px;
   }
-  .restart-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(90,42,131,0.4); }
+  .restart-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,120,195,0.45); }
 
   /* ── SUMMARY TABLE ── */
   .summary-table {
@@ -423,7 +422,7 @@
     font-size: 13px;
   }
   .summary-table th {
-    background: var(--purple);
+    background: var(--primary-dark);
     color: white;
     padding: 10px 14px;
     text-align: left;
@@ -447,7 +446,7 @@
     align-items: center;
     gap: 5px;
     font-weight: 700;
-    color: var(--purple);
+    color: var(--primary);
     font-size: 13px;
   }
 
@@ -492,7 +491,9 @@
 <!-- HEADER -->
 <header class="header">
   <div class="header-brand">
-    <div class="header-logo">H</div>
+    <div class="header-logo">
+      <img src="https://triathlon-obernai.fr/wp-content/uploads/2023/04/Hager_Logo_533px_sRGB_blue.png" alt="Hager" />
+    </div>
     <div class="header-title">ModernD <span>Centre</span></div>
   </div>
   <div class="header-pill">
@@ -538,8 +539,8 @@ const PAGES = {
     quote: '"A project well run begins with listening, not acting," whispers Bunny 365.',
     tip: null,
     choices: [
-      { letter: "A", text: "Read the project brief in your inbox first", dest: "→ Page 2 – Outlook", page: 2 },
-      { letter: "B", text: "A colleague already briefed you; open your notebook directly", dest: "→ Page 3 – OneNote", page: 3 }
+      { letter: "A", text: "Read the project brief in your inbox first", dest: "→ Outlook", page: 2 },
+      { letter: "B", text: "A colleague already briefed you; open your notebook directly", dest: "→ OneNote", page: 3 }
     ]
   },
 
@@ -557,8 +558,8 @@ const PAGES = {
     quote: null,
     tip: { tool: "Outlook", text: "Use Conditional Formatting to automatically colour emails by sender or subject, so you can see your priorities at a glance without reading every message.", link: "https://hagergroup.sharepoint.com/sites/ModernDCentre/SitePages/Easter-tip---Outlook---Use-%E2%80%9CConditional-Formatting%E2%80%9D-to-visually-prioritize-emails.aspx" },
     choices: [
-      { letter: "A", text: "Take structured notes before planning anything", dest: "→ Page 3 – OneNote", page: 3 },
-      { letter: "B", text: "The brief is clear; move straight to planning tasks", dest: "→ Page 4 – Planner", page: 4 }
+      { letter: "A", text: "Take structured notes before planning anything", dest: "→ OneNote", page: 3 },
+      { letter: "B", text: "The brief is clear; move straight to planning tasks", dest: "→ Planner", page: 4 }
     ]
   },
 
@@ -576,8 +577,8 @@ const PAGES = {
     quote: null,
     tip: { tool: "OneNote", text: "Use Tags (To Do, Important, Question…) to turn raw notes into actionable items that can feed directly into Planner — no copy-paste required.", link: "https://hagergroup.sharepoint.com/sites/ModernDCentre/SitePages/Easter-tip---Tip-OneNote---Use-Tags-in-OneNote-to-turn-notes-into-clear-actions-and-reminders.aspx" },
     choices: [
-      { letter: "A", text: "The foundations are in place; now organise work into tasks", dest: "→ Page 4 – Planner", page: 4 },
-      { letter: "B", text: "Align the team before planning; open a channel", dest: "→ Page 5 – Teams", page: 5 }
+      { letter: "A", text: "The foundations are in place; now organise work into tasks", dest: "→ Planner", page: 4 },
+      { letter: "B", text: "Align the team before planning; open a channel", dest: "→ Teams", page: 5 }
     ]
   },
 
@@ -595,8 +596,8 @@ const PAGES = {
     quote: null,
     tip: { tool: "Planner", text: "Schedule view reveals hidden overloads that are invisible in the Board view — essential for detecting bottlenecks before they block your team.", link: "https://hagergroup.sharepoint.com/sites/ModernDCentre/SitePages/Easter-tip---Planner---Use-Schedule-view-to-detect-overload-and-bottlenecks.aspx" },
     choices: [
-      { letter: "A", text: "The plan is ready; align the team in a shared channel", dest: "→ Page 5 – Teams", page: 5 },
-      { letter: "B", text: "Centralise documents before contacting anyone", dest: "→ Page 6 – SharePoint", page: 6 }
+      { letter: "A", text: "The plan is ready; align the team in a shared channel", dest: "→ Teams", page: 5 },
+      { letter: "B", text: "Centralise documents before contacting anyone", dest: "→ SharePoint", page: 6 }
     ]
   },
 
@@ -614,8 +615,8 @@ const PAGES = {
     quote: null,
     tip: { tool: "Teams", text: "Use Saved Messages as a personal memory space — bookmark decisions, links, or updates so you can retrieve them instantly without scrolling back through threads.", link: "https://hagergroup.sharepoint.com/sites/ModernDCentre/SitePages/Easter-tip---Teams---Use-Saved-Messages-as-a-personal-memory-space-in-Teams.aspx" },
     choices: [
-      { letter: "A", text: "Team aligned; centralise all documents in a shared space", dest: "→ Page 6 – SharePoint", page: 6 },
-      { letter: "B", text: "Sync your own files locally to work offline", dest: "→ Page 7 – OneDrive", page: 7 }
+      { letter: "A", text: "Team aligned; centralise all documents in a shared space", dest: "→ SharePoint", page: 6 },
+      { letter: "B", text: "Sync your own files locally to work offline", dest: "→ OneDrive", page: 7 }
     ]
   },
 
@@ -633,8 +634,8 @@ const PAGES = {
     quote: null,
     tip: { tool: "SharePoint", text: "Create Page Templates so every team member starts from the same structure — faster creation and guaranteed visual consistency across all project pages.", link: "https://hagergroup.sharepoint.com/sites/ModernDCentre/SitePages/Easter-tip---SharePoint---Use-Page-Templates-to-standardize-content-creation.aspx" },
     choices: [
-      { letter: "A", text: "Files are centralised; sync them to work in mobility", dest: "→ Page 7 – OneDrive", page: 7 },
-      { letter: "B", text: "Everything is in place; move straight to data analysis", dest: "→ Page 8 – Excel", page: 8 }
+      { letter: "A", text: "Files are centralised; sync them to work in mobility", dest: "→ OneDrive", page: 7 },
+      { letter: "B", text: "Everything is in place; move straight to data analysis", dest: "→ Excel", page: 8 }
     ]
   },
 
@@ -652,8 +653,8 @@ const PAGES = {
     quote: null,
     tip: { tool: "OneDrive", text: "The Restore your OneDrive feature lets you roll back your entire folder to a previous point in time — not just one file, but everything at once.", link: "https://hagergroup.sharepoint.com/sites/ModernDCentre/SitePages/Easter-tip---OneDrive---Restore-your-entire-OneDrive-to-a-previous-point-in-time.aspx" },
     choices: [
-      { letter: "A", text: "Files are clean; analyse the project data", dest: "→ Page 8 – Excel", page: 8 },
-      { letter: "B", text: "Skip the analysis and write the report straight away", dest: "→ Page 13 – Bad Ending ⚠️", page: 13 }
+      { letter: "A", text: "Files are clean; analyse the project data", dest: "→ Excel", page: 8 },
+      { letter: "B", text: "Skip the analysis and write the report straight away", dest: "→ Bad Ending ⚠️", page: 13 }
     ]
   },
 
@@ -671,8 +672,8 @@ const PAGES = {
     quote: null,
     tip: { tool: "Excel", text: "Use dynamic named ranges built with formulas (e.g. OFFSET + COUNTA) instead of structured tables when you need flexibility across complex formulas and cross-sheet references.", link: "https://hagergroup.sharepoint.com/sites/ModernDCentre/SitePages/Easter-tip---Excel---Use-dynamic-named-ranges-with-formulas-(not-tables).aspx" },
     choices: [
-      { letter: "A", text: "Data is ready; write the formal report", dest: "→ Page 9 – Word", page: 9 },
-      { letter: "B", text: "Share results with the team to co-build conclusions", dest: "→ Page 10 – Loop", page: 10 }
+      { letter: "A", text: "Data is ready; write the formal report", dest: "→ Word", page: 9 },
+      { letter: "B", text: "Share results with the team to co-build conclusions", dest: "→ Loop", page: 10 }
     ]
   },
 
@@ -690,8 +691,8 @@ const PAGES = {
     quote: null,
     tip: { tool: "Word", text: "Quick Parts let you save and reinsert structured content blocks in one click — standard clauses, report headers, legal notices — essential for consistent deliverables.", link: "https://hagergroup.sharepoint.com/sites/ModernDCentre/SitePages/Easter-tip---Word---Use-%E2%80%9CQuick-Parts%E2%80%9D-to-reuse-structured-content-blocks.aspx" },
     choices: [
-      { letter: "A", text: "Report drafted; share it with the team for collective review", dest: "→ Page 10 – Loop", page: 10 },
-      { letter: "B", text: "Report finalised; move straight to the presentation", dest: "→ Page 11 – PowerPoint", page: 11 }
+      { letter: "A", text: "Report drafted; share it with the team for collective review", dest: "→ Loop", page: 10 },
+      { letter: "B", text: "Report finalised; move straight to the presentation", dest: "→ PowerPoint", page: 11 }
     ]
   },
 
@@ -709,8 +710,8 @@ const PAGES = {
     quote: null,
     tip: { tool: "Loop", text: "Use Loop tables as collaborative lightweight trackers — they sync live inside Teams, OneNote, and Outlook, so updates are visible everywhere without copy-pasting.", link: "https://hagergroup.sharepoint.com/sites/ModernDCentre/SitePages/Easter-tip---Loop---Use-Loop-tables-as-lightweight-collaborative-trackers-(not-just-notes).aspx" },
     choices: [
-      { letter: "A", text: "Conclusions aligned; build the final presentation", dest: "→ Page 11 – PowerPoint", page: 11 },
-      { letter: "B", text: "The team is aligned; publish results directly without a formal presentation", dest: "→ Page 15 – Collaborative Ending 🎉", page: 15 }
+      { letter: "A", text: "Conclusions aligned; build the final presentation", dest: "→ PowerPoint", page: 11 },
+      { letter: "B", text: "The team is aligned; publish results directly without a formal presentation", dest: "→ Collaborative Ending 🎉", page: 15 }
     ]
   },
 
@@ -728,8 +729,8 @@ const PAGES = {
     quote: null,
     tip: { tool: "PowerPoint", text: "Slide Zoom lets you build interactive presentations where you can jump freely between sections — perfect for restitutions with live audience questions.", link: "https://hagergroup.sharepoint.com/sites/ModernDCentre/SitePages/Easter-tip---PowerPoint---Use-Slide-Zoom-to-create-non%E2%80%91linear-presentations.aspx" },
     choices: [
-      { letter: "A", text: "The presentation is strong; create a video summary for those who could not attend", dest: "→ Page 12 – Clipchamp", page: 12 },
-      { letter: "B", text: "The presentation is enough; deliver the project", dest: "→ Page 14 – Solo Ending ✅", page: 14 }
+      { letter: "A", text: "The presentation is strong; create a video summary for those who could not attend", dest: "→ Clipchamp", page: 12 },
+      { letter: "B", text: "The presentation is enough; deliver the project", dest: "→ Solo Ending ✅", page: 14 }
     ]
   },
 
@@ -747,7 +748,7 @@ const PAGES = {
     quote: null,
     tip: { tool: "Clipchamp", text: "Place semi-transparent shapes behind on-screen text to ensure readability against any video background — simple but frequently overlooked.", link: "https://hagergroup.sharepoint.com/sites/ModernDCentre/SitePages/Easter-tip---Clipchamp---Use-background-shapes-behind-text-to-improve-readability.aspx" },
     choices: [
-      { letter: "→", text: "All eleven eggs collected — complete the journey!", dest: "→ Page 15 – Collaborative Ending", page: 15 }
+      { letter: "→", text: "All eleven eggs collected — complete the journey!", dest: "→ Collaborative Ending", page: 15 }
     ]
   },
 
@@ -868,7 +869,6 @@ function renderPage(pageId) {
 
   // band
   html += `<div class="page-band ${pg.band}">
-    <div class="page-num">${pg.num}</div>
     <div class="page-title">${pg.icon} ${pg.title}</div>
     ${pg.tool ? `<div class="page-tool-badge">🏢 ${pg.tool} &nbsp;·&nbsp; Hager Group</div>` : ''}
   </div>`;
@@ -902,7 +902,7 @@ function renderPage(pageId) {
       <div class="tip-content">
         <div class="tip-label">Tip · <span class="tip-tool">${pg.tip.tool}</span></div>
         <div class="tip-text">${pg.tip.text}</div>
-        ${pg.tip.link ? `<a class="tip-link" href="${pg.tip.link}" target="_blank" rel="noopener">Check the ModernD Centre to learn more about this tip. →</a>` : ''}
+        ${pg.tip.link ? `<a class="tip-link" href="${pg.tip.link}" target="_blank" rel="noopener">Learn more on ModernD Centre →</a>` : ''}
       </div>
     </div>`;
   }
@@ -924,14 +924,14 @@ function renderPage(pageId) {
 
   // ending actions
   if (pg.ending === 'bad') {
-    html += `<button class="back-btn" onclick="goTo(7)">← Go back to Page 7 – OneDrive</button>`;
+    html += `<button class="back-btn" onclick="goTo(7)">← Go back to OneDrive</button>`;
   }
   if (pg.ending === 'solo' || pg.ending === 'good') {
     // summary table
     html += `<hr class="divider">
     <div class="choices-label">All 11 skills collected</div>
     <table class="summary-table">
-      <thead><tr><th>#</th><th>Tool</th><th>Tip</th></tr></thead><tbody>`;
+      <thead><tr><th>#</th><th>Tool</th><th>Tip</th><th>Link</th></tr></thead><tbody>`;
     TOOL_ORDER.forEach((p, i) => {
       const tp = PAGES[p];
       const collected = collectedEggs.has(p);
@@ -939,6 +939,7 @@ function renderPage(pageId) {
         <td>${i + 1}</td>
         <td><span class="tool-chip">${tp.icon} ${tp.title}</span></td>
         <td style="color:${collected ? '#374151' : '#9ca3af'}">${tp.tip ? tp.tip.text : '—'}</td>
+        <td>${tp.tip && tp.tip.link ? `<a href="${tp.tip.link}" target="_blank" style="display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700;color:#0078c3;text-decoration:none;background:#dcf0ff;padding:4px 12px;border-radius:999px;white-space:nowrap;" onmouseover="this.style.background='#0078c3';this.style.color='white'" onmouseout="this.style.background='#dcf0ff';this.style.color='#0078c3'">Learn more →</a>` : '—'}</td>
       </tr>`;
     });
     html += `</tbody></table>`;
