@@ -274,6 +274,22 @@
     color: #78350f;
     line-height: 1.6;
   }
+  .tip-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #78350f;
+    text-decoration: none;
+    background: #fde68a;
+    border: 2px solid #f59e0b;
+    padding: 8px 18px;
+    border-radius: 999px;
+    transition: all 0.2s;
+  }
+  .tip-link:hover { background: #5a2a83; color: white; border-color: #5a2a83; transform: translateY(-1px); }
 
   /* ── DIVIDER ── */
   .divider {
@@ -539,7 +555,7 @@ const PAGES = {
       "You apply <strong>Conditional Formatting</strong> to highlight messages by sender and subject. The brief rises to the top. Expectations are clear. The egg steadies itself, reassured."
     ],
     quote: null,
-    tip: { tool: "Outlook", text: "Use Conditional Formatting to automatically colour emails by sender or subject, so you can see your priorities at a glance without reading every message." },
+    tip: { tool: "Outlook", text: "Use Conditional Formatting to automatically colour emails by sender or subject, so you can see your priorities at a glance without reading every message.", link: "https://hagergroup.sharepoint.com/sites/ModernDCentre/SitePages/Easter-tip---Outlook---Use-%E2%80%9CConditional-Formatting%E2%80%9D-to-visually-prioritize-emails.aspx" },
     choices: [
       { letter: "A", text: "Take structured notes before planning anything", dest: "→ Page 3 – OneNote", page: 3 },
       { letter: "B", text: "The brief is clear; move straight to planning tasks", dest: "→ Page 4 – Planner", page: 4 }
@@ -558,7 +574,7 @@ const PAGES = {
       "You restructure the notebook and add <strong>tags</strong> to every action item. The egg straightens up, relieved. Ideas now have a place to live."
     ],
     quote: null,
-    tip: { tool: "OneNote", text: "Use Tags (To Do, Important, Question…) to turn raw notes into actionable items that can feed directly into Planner — no copy-paste required." },
+    tip: { tool: "OneNote", text: "Use Tags (To Do, Important, Question…) to turn raw notes into actionable items that can feed directly into Planner — no copy-paste required.", link: "https://hagergroup.sharepoint.com/sites/ModernDCentre/SitePages/Easter-tip---Tip-OneNote---Use-Tags-in-OneNote-to-turn-notes-into-clear-actions-and-reminders.aspx" },
     choices: [
       { letter: "A", text: "The foundations are in place; now organise work into tasks", dest: "→ Page 4 – Planner", page: 4 },
       { letter: "B", text: "Align the team before planning; open a channel", dest: "→ Page 5 – Teams", page: 5 }
@@ -577,7 +593,7 @@ const PAGES = {
       "You assign it, then switch to <strong>Schedule view</strong> — and immediately spot two milestones dangerously overlapping. You reorganise. The egg stops blinking. The plan is now actionable."
     ],
     quote: null,
-    tip: { tool: "Planner", text: "Schedule view reveals hidden overloads that are invisible in the Board view — essential for detecting bottlenecks before they block your team." },
+    tip: { tool: "Planner", text: "Schedule view reveals hidden overloads that are invisible in the Board view — essential for detecting bottlenecks before they block your team.", link: "https://hagergroup.sharepoint.com/sites/ModernDCentre/SitePages/Easter-tip---Planner---Use-Schedule-view-to-detect-overload-and-bottlenecks.aspx" },
     choices: [
       { letter: "A", text: "The plan is ready; align the team in a shared channel", dest: "→ Page 5 – Teams", page: 5 },
       { letter: "B", text: "Centralise documents before contacting anyone", dest: "→ Page 6 – SharePoint", page: 6 }
@@ -596,7 +612,7 @@ const PAGES = {
       "You create focused sub-channels, pin the brief as an announcement, and save key decisions using <strong>Saved Messages</strong>. The egg surfaces, finally visible and calm."
     ],
     quote: null,
-    tip: { tool: "Teams", text: "Use Saved Messages as a personal memory space — bookmark decisions, links, or updates so you can retrieve them instantly without scrolling back through threads." },
+    tip: { tool: "Teams", text: "Use Saved Messages as a personal memory space — bookmark decisions, links, or updates so you can retrieve them instantly without scrolling back through threads.", link: "https://hagergroup.sharepoint.com/sites/ModernDCentre/SitePages/Easter-tip---Teams---Use-Saved-Messages-as-a-personal-memory-space-in-Teams.aspx" },
     choices: [
       { letter: "A", text: "Team aligned; centralise all documents in a shared space", dest: "→ Page 6 – SharePoint", page: 6 },
       { letter: "B", text: "Sync your own files locally to work offline", dest: "→ Page 7 – OneDrive", page: 7 }
@@ -615,7 +631,7 @@ const PAGES = {
       "You apply a <strong>Page Template</strong> to standardise all deliverable pages across the team. The egg gains colour — consistency breathes life into it."
     ],
     quote: null,
-    tip: { tool: "SharePoint", text: "Create Page Templates so every team member starts from the same structure — faster creation and guaranteed visual consistency across all project pages." },
+    tip: { tool: "SharePoint", text: "Create Page Templates so every team member starts from the same structure — faster creation and guaranteed visual consistency across all project pages.", link: "https://hagergroup.sharepoint.com/sites/ModernDCentre/SitePages/Easter-tip---SharePoint---Use-Page-Templates-to-standardize-content-creation.aspx" },
     choices: [
       { letter: "A", text: "Files are centralised; sync them to work in mobility", dest: "→ Page 7 – OneDrive", page: 7 },
       { letter: "B", text: "Everything is in place; move straight to data analysis", dest: "→ Page 8 – Excel", page: 8 }
@@ -634,7 +650,7 @@ const PAGES = {
       "You use the <strong>Restore</strong> feature to roll back to the correct version. The egg stabilises."
     ],
     quote: null,
-    tip: { tool: "OneDrive", text: "The Restore your OneDrive feature lets you roll back your entire folder to a previous point in time — not just one file, but everything at once." },
+    tip: { tool: "OneDrive", text: "The Restore your OneDrive feature lets you roll back your entire folder to a previous point in time — not just one file, but everything at once.", link: "https://hagergroup.sharepoint.com/sites/ModernDCentre/SitePages/Easter-tip---OneDrive---Restore-your-entire-OneDrive-to-a-previous-point-in-time.aspx" },
     choices: [
       { letter: "A", text: "Files are clean; analyse the project data", dest: "→ Page 8 – Excel", page: 8 },
       { letter: "B", text: "Skip the analysis and write the report straight away", dest: "→ Page 13 – Bad Ending ⚠️", page: 13 }
@@ -653,7 +669,7 @@ const PAGES = {
       "You structure the data with <strong>dynamic named ranges</strong>, build the key indicators, and clean the charts. The egg settles — the data now tells a clear story."
     ],
     quote: null,
-    tip: { tool: "Excel", text: "Use dynamic named ranges built with formulas (e.g. OFFSET + COUNTA) instead of structured tables when you need flexibility across complex formulas and cross-sheet references." },
+    tip: { tool: "Excel", text: "Use dynamic named ranges built with formulas (e.g. OFFSET + COUNTA) instead of structured tables when you need flexibility across complex formulas and cross-sheet references.", link: "https://hagergroup.sharepoint.com/sites/ModernDCentre/SitePages/Easter-tip---Excel---Use-dynamic-named-ranges-with-formulas-(not-tables).aspx" },
     choices: [
       { letter: "A", text: "Data is ready; write the formal report", dest: "→ Page 9 – Word", page: 9 },
       { letter: "B", text: "Share results with the team to co-build conclusions", dest: "→ Page 10 – Loop", page: 10 }
@@ -672,7 +688,7 @@ const PAGES = {
       "You apply heading styles and insert <strong>Quick Parts</strong> for recurring headers and standard clauses. The egg smooths out and aligns perfectly on the page."
     ],
     quote: null,
-    tip: { tool: "Word", text: "Quick Parts let you save and reinsert structured content blocks in one click — standard clauses, report headers, legal notices — essential for consistent deliverables." },
+    tip: { tool: "Word", text: "Quick Parts let you save and reinsert structured content blocks in one click — standard clauses, report headers, legal notices — essential for consistent deliverables.", link: "https://hagergroup.sharepoint.com/sites/ModernDCentre/SitePages/Easter-tip---Word---Use-%E2%80%9CQuick-Parts%E2%80%9D-to-reuse-structured-content-blocks.aspx" },
     choices: [
       { letter: "A", text: "Report drafted; share it with the team for collective review", dest: "→ Page 10 – Loop", page: 10 },
       { letter: "B", text: "Report finalised; move straight to the presentation", dest: "→ Page 11 – PowerPoint", page: 11 }
@@ -691,7 +707,7 @@ const PAGES = {
       "Each person completes their section in real time — comments, adjustments, decisions land one after another. You use a <strong>Loop table</strong> as a lightweight decision tracker. The egg steadies the moment the last decision is validated collectively."
     ],
     quote: null,
-    tip: { tool: "Loop", text: "Use Loop tables as collaborative lightweight trackers — they sync live inside Teams, OneNote, and Outlook, so updates are visible everywhere without copy-pasting." },
+    tip: { tool: "Loop", text: "Use Loop tables as collaborative lightweight trackers — they sync live inside Teams, OneNote, and Outlook, so updates are visible everywhere without copy-pasting.", link: "https://hagergroup.sharepoint.com/sites/ModernDCentre/SitePages/Easter-tip---Loop---Use-Loop-tables-as-lightweight-collaborative-trackers-(not-just-notes).aspx" },
     choices: [
       { letter: "A", text: "Conclusions aligned; build the final presentation", dest: "→ Page 11 – PowerPoint", page: 11 },
       { letter: "B", text: "The team is aligned; publish results directly without a formal presentation", dest: "→ Page 15 – Collaborative Ending 🎉", page: 15 }
@@ -710,7 +726,7 @@ const PAGES = {
       "You simplify, structure sections, and add <strong>Slide Zoom</strong> to enable non-linear navigation during the Q&A. The egg stops vibrating the moment the last slide clicks into place. The story is clear, the flow is right."
     ],
     quote: null,
-    tip: { tool: "PowerPoint", text: "Slide Zoom lets you build interactive presentations where you can jump freely between sections — perfect for restitutions with live audience questions." },
+    tip: { tool: "PowerPoint", text: "Slide Zoom lets you build interactive presentations where you can jump freely between sections — perfect for restitutions with live audience questions.", link: "https://hagergroup.sharepoint.com/sites/ModernDCentre/SitePages/Easter-tip---PowerPoint---Use-Slide-Zoom-to-create-non%E2%80%91linear-presentations.aspx" },
     choices: [
       { letter: "A", text: "The presentation is strong; create a video summary for those who could not attend", dest: "→ Page 12 – Clipchamp", page: 12 },
       { letter: "B", text: "The presentation is enough; deliver the project", dest: "→ Page 14 – Solo Ending ✅", page: 14 }
@@ -729,7 +745,7 @@ const PAGES = {
       "You add <strong>semi-transparent shapes</strong> behind every text overlay to guarantee readability on any background. The egg erupts in digital confetti — the <strong>eleventh egg</strong> is recovered! 🎉"
     ],
     quote: null,
-    tip: { tool: "Clipchamp", text: "Place semi-transparent shapes behind on-screen text to ensure readability against any video background — simple but frequently overlooked." },
+    tip: { tool: "Clipchamp", text: "Place semi-transparent shapes behind on-screen text to ensure readability against any video background — simple but frequently overlooked.", link: "https://hagergroup.sharepoint.com/sites/ModernDCentre/SitePages/Easter-tip---Clipchamp---Use-background-shapes-behind-text-to-improve-readability.aspx" },
     choices: [
       { letter: "→", text: "All eleven eggs collected — complete the journey!", dest: "→ Page 15 – Collaborative Ending", page: 15 }
     ]
@@ -886,6 +902,7 @@ function renderPage(pageId) {
       <div class="tip-content">
         <div class="tip-label">Tip · <span class="tip-tool">${pg.tip.tool}</span></div>
         <div class="tip-text">${pg.tip.text}</div>
+        ${pg.tip.link ? `<a class="tip-link" href="${pg.tip.link}" target="_blank" rel="noopener">Learn more on ModernD Centre →</a>` : ''}
       </div>
     </div>`;
   }
