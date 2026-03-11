@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ModernD Centre — Easter Egg Hunt</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --hager-red: #E2001A;
+    --purple: #5a2a83;
+    --purple-light: #7c3aad;
+    --purple-soft: #ede7f6;
+    --gold: #f59e0b;
+    --gold-soft: #fef3c7;
+    --green: #059669;
+    --blue: #0ea5e9;
+    --bg: #f8f7fc;
+    --card: #ffffff;
+    --text: #1e1b2e;
+    --text-muted: #6b7280;
+    --border: #e5e7eb;
+    --radius: 20px;
+    --shadow: 0 4px 24px rgba(90,42,131,0.10);
+    --shadow-lg: 0 8px 40px rgba(90,42,131,0.18);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Sora', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: linear-gradient(135deg, var(--purple) 0%, #2d1356 100%);
+    padding: 0 32px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.25);
+  }
+  .header-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .header-logo {
+    width: 32px; height: 32px;
+    background: var(--hager-red);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    color: white;
+    font-size: 13px;
+    letter-spacing: -0.5px;
+  }
+  .header-title {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 17px;
+    color: white;
+    letter-spacing: -0.3px;
+  }
+  .header-title span { color: #c4b5fd; }
+  .header-pill {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 14px;
+    border-radius: 999px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .egg-counter {
+    background: var(--gold);
+    color: #1e1b2e;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    min-width: 28px;
+    text-align: center;
+    transition: transform 0.3s, background 0.3s;
+  }
+  .egg-counter.bump { transform: scale(1.4); background: #fbbf24; }
+
+  /* ── MAIN LAYOUT ── */
+  .main {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  /* ── PROGRESS BAR ── */
+  .progress-wrap {
+    background: white;
+    border-radius: 14px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .progress-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .progress-bar-bg {
+    flex: 1;
+    background: var(--purple-soft);
+    border-radius: 999px;
+    height: 10px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--purple), var(--purple-light));
+    border-radius: 999px;
+    transition: width 0.6s cubic-bezier(.4,0,.2,1);
+    width: 0%;
+  }
+  .progress-eggs {
+    display: flex;
+    gap: 4px;
+  }
+  .egg-dot {
+    width: 18px; height: 22px;
+    font-size: 16px;
+    filter: grayscale(1) opacity(0.3);
+    transition: filter 0.4s, transform 0.3s;
+    cursor: default;
+  }
+  .egg-dot.collected {
+    filter: grayscale(0) opacity(1);
+    transform: scale(1.15);
+  }
+
+  /* ── PAGE CARD ── */
+  .page-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    animation: slideIn 0.4s cubic-bezier(.4,0,.2,1);
+  }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── PAGE HEADER BAND ── */
+  .page-band {
+    padding: 28px 32px 22px;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-band::after {
+    content: '';
+    position: absolute;
+    right: -30px; top: -30px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+  }
+  .page-band.purple  { background: linear-gradient(135deg, var(--purple), #2d1356); }
+  .page-band.red     { background: linear-gradient(135deg, #c0392b, #e2001a); }
+  .page-band.green   { background: linear-gradient(135deg, #065f46, #059669); }
+  .page-band.blue    { background: linear-gradient(135deg, #0c4a6e, #0ea5e9); }
+  .page-band.teal    { background: linear-gradient(135deg, #134e4a, #0d9488); }
+  .page-band.orange  { background: linear-gradient(135deg, #92400e, #f59e0b); }
+  .page-band.indigo  { background: linear-gradient(135deg, #312e81, #6366f1); }
+  .page-band.violet  { background: linear-gradient(135deg, #4c1d95, #8b5cf6); }
+  .page-band.pink    { background: linear-gradient(135deg, #831843, #ec4899); }
+  .page-band.gray    { background: linear-gradient(135deg, #374151, #6b7280); }
+
+  .page-num {
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .page-title {
+    font-family: 'Nunito', sans-serif;
+    font-size: 26px;
+    font-weight: 900;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    line-height: 1.2;
+  }
+  .page-tool-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 999px;
+    margin-top: 10px;
+  }
+
+  /* ── PAGE BODY ── */
+  .page-body {
+    padding: 28px 32px;
+  }
+  .story-text {
+    font-size: 15px;
+    line-height: 1.75;
+    color: #374151;
+    margin-bottom: 14px;
+  }
+  .story-text strong { color: var(--text); }
+  .story-quote {
+    font-style: italic;
+    color: var(--purple);
+    font-size: 15px;
+    line-height: 1.7;
+    border-left: 3px solid var(--purple-light);
+    padding-left: 16px;
+    margin: 18px 0;
+  }
+
+  /* ── TIP BOX ── */
+  .tip-box {
+    background: var(--gold-soft);
+    border: 1.5px solid #fcd34d;
+    border-radius: 14px;
+    padding: 16px 20px;
+    margin: 22px 0;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .tip-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .tip-content {}
+  .tip-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #92400e;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .tip-tool {
+    font-weight: 700;
+    color: #78350f;
+  }
+  .tip-text {
+    font-size: 14px;
+    color: #78350f;
+    line-height: 1.6;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 24px 0;
+  }
+
+  /* ── CHOICES ── */
+  .choices-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .choices {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .choice-btn {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px 20px;
+    border-radius: 14px;
+    border: 2px solid var(--border);
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+    width: 100%;
+    font-family: 'Sora', sans-serif;
+  }
+  .choice-btn:hover {
+    border-color: var(--purple);
+    background: var(--purple-soft);
+    transform: translateX(4px);
+    box-shadow: 0 4px 16px rgba(90,42,131,0.12);
+  }
+  .choice-letter {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--purple-soft);
+    color: var(--purple);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.2s, color 0.2s;
+  }
+  .choice-btn:hover .choice-letter {
+    background: var(--purple);
+    color: white;
+  }
+  .choice-body {}
+  .choice-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.5;
+    margin-bottom: 2px;
+  }
+  .choice-dest {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  /* ── ENDING CARDS ── */
+  .ending-bad  { border-top: 5px solid #ef4444; }
+  .ending-solo { border-top: 5px solid var(--gold); }
+  .ending-good { border-top: 5px solid var(--green); }
+
+  .ending-banner {
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 20px;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .ending-bad  .ending-banner { background: #fef2f2; color: #7f1d1d; }
+  .ending-solo .ending-banner { background: #fffbeb; color: #78350f; }
+  .ending-good .ending-banner { background: #ecfdf5; color: #064e3b; }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 999px;
+    border: 2px solid var(--purple);
+    color: var(--purple);
+    background: white;
+    font-family: 'Sora', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 10px;
+  }
+  .back-btn:hover { background: var(--purple); color: white; }
+
+  .restart-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--purple), var(--purple-light));
+    color: white;
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    box-shadow: 0 4px 20px rgba(90,42,131,0.3);
+    margin-top: 16px;
+  }
+  .restart-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(90,42,131,0.4); }
+
+  /* ── SUMMARY TABLE ── */
+  .summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+    font-size: 13px;
+  }
+  .summary-table th {
+    background: var(--purple);
+    color: white;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .summary-table th:first-child { border-radius: 10px 0 0 0; }
+  .summary-table th:last-child  { border-radius: 0 10px 0 0; }
+  .summary-table td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .summary-table tr:nth-child(even) td { background: #fafafa; }
+  .summary-table tr:last-child td { border-bottom: none; }
+  .tool-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 700;
+    color: var(--purple);
+    font-size: 13px;
+  }
+
+  /* ── HISTORY BREADCRUMB ── */
+  .history-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 24px;
+    min-height: 28px;
+  }
+  .history-crumb {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    display: flex; align-items: center; gap: 4px;
+  }
+  .history-crumb + .history-crumb::before {
+    content: '';
+    display: none;
+  }
+  .crumb-sep { color: #d1d5db; margin: 0 2px; }
+
+  /* ── TOOL ICON EMOJIS ── */
+  .ti { font-size: 18px; }
+
+  @media (max-width: 600px) {
+    .main { padding: 20px 12px 60px; }
+    .page-band { padding: 20px 20px 16px; }
+    .page-body { padding: 20px 20px; }
+    .page-title { font-size: 20px; }
+    .progress-eggs { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-brand">
+    <div class="header-logo">H</div>
+    <div class="header-title">ModernD <span>Centre</span></div>
+  </div>
+  <div class="header-pill">
+    🥚 Eggs collected: <span class="egg-counter" id="eggCount">0 / 11</span>
+  </div>
+</header>
+
+<main class="main">
+
+  <!-- PROGRESS -->
+  <div class="progress-wrap">
+    <span class="progress-label">Your journey</span>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progressFill"></div>
+    </div>
+    <div class="progress-eggs" id="eggDots"></div>
+  </div>
+
+  <!-- HISTORY -->
+  <div class="history-bar" id="historyBar"></div>
+
+  <!-- PAGE CONTAINER -->
+  <div id="pageContainer"></div>
+
+</main>
+
+<script>
+// ── DATA ────────────────────────────────────────────────────────────────────
+const PAGES = {
+
+  1: {
+    num: "Introduction",
+    title: "Welcome to ModernD Centre",
+    icon: "🐰",
+    band: "purple",
+    tool: null,
+    egg: false,
+    story: [
+      "Welcome to the <strong>ModernD Centre</strong>, where your Microsoft 365 skills grow every day.",
+      "Early this morning, <strong>Bunny 365</strong>, the Guardian of Productivity Eggs, discovered that <strong>eleven Eggs of Competence</strong> had been scattered across the digital workspace. Each egg carries a practical skill that teams rely on — collaboration, organisation, knowledge management, data insight, and more.",
+      "Without these eggs, the ModernD Centre may lose crucial know-how for thousands of colleagues worldwide. Bunny 365 needs your help. You will follow the <strong>natural lifecycle of a real project</strong> — from receiving the brief all the way to final delivery. Your decisions will shape how the story ends."
+    ],
+    quote: '"A project well run begins with listening, not acting," whispers Bunny 365.',
+    tip: null,
+    choices: [
+      { letter: "A", text: "Read the project brief in your inbox first", dest: "→ Page 2 – Outlook", page: 2 },
+      { letter: "B", text: "A colleague already briefed you; open your notebook directly", dest: "→ Page 3 – OneNote", page: 3 }
+    ]
+  },
+
+  2: {
+    num: "Page 2",
+    title: "Outlook",
+    icon: "📧",
+    band: "blue",
+    tool: "Microsoft Outlook",
+    egg: true,
+    story: [
+      "You open your inbox and find the official project brief buried under dozens of messages. An <strong>orange egg</strong> glows inside an email flagged as high priority — it vibrates gently, as if waiting for you to read carefully before acting.",
+      "You apply <strong>Conditional Formatting</strong> to highlight messages by sender and subject. The brief rises to the top. Expectations are clear. The egg steadies itself, reassured."
+    ],
+    quote: null,
+    tip: { tool: "Outlook", text: "Use Conditional Formatting to automatically colour emails by sender or subject, so you can see your priorities at a glance without reading every message." },
+    choices: [
+      { letter: "A", text: "Take structured notes before planning anything", dest: "→ Page 3 – OneNote", page: 3 },
+      { letter: "B", text: "The brief is clear; move straight to planning tasks", dest: "→ Page 4 – Planner", page: 4 }
+    ]
+  },
+
+  3: {
+    num: "Page 3",
+    title: "OneNote",
+    icon: "📓",
+    band: "violet",
+    tool: "Microsoft OneNote",
+    egg: true,
+    story: [
+      "You open OneNote and begin capturing everything you know about the project: objectives, stakeholders, open questions, risks. A <strong>violet egg</strong> rests between two sections, slightly crumpled — clearly shaken by disorganised notes.",
+      "You restructure the notebook and add <strong>tags</strong> to every action item. The egg straightens up, relieved. Ideas now have a place to live."
+    ],
+    quote: null,
+    tip: { tool: "OneNote", text: "Use Tags (To Do, Important, Question…) to turn raw notes into actionable items that can feed directly into Planner — no copy-paste required." },
+    choices: [
+      { letter: "A", text: "The foundations are in place; now organise work into tasks", dest: "→ Page 4 – Planner", page: 4 },
+      { letter: "B", text: "Align the team before planning; open a channel", dest: "→ Page 5 – Teams", page: 5 }
+    ]
+  },
+
+  4: {
+    num: "Page 4",
+    title: "Planner",
+    icon: "📋",
+    band: "teal",
+    tool: "Microsoft Planner",
+    egg: true,
+    story: [
+      "You open Planner and build the project board: buckets by phase, tasks assigned, deadlines set. A <strong>green egg</strong> blinks steadily on a task with no owner.",
+      "You assign it, then switch to <strong>Schedule view</strong> — and immediately spot two milestones dangerously overlapping. You reorganise. The egg stops blinking. The plan is now actionable."
+    ],
+    quote: null,
+    tip: { tool: "Planner", text: "Schedule view reveals hidden overloads that are invisible in the Board view — essential for detecting bottlenecks before they block your team." },
+    choices: [
+      { letter: "A", text: "The plan is ready; align the team in a shared channel", dest: "→ Page 5 – Teams", page: 5 },
+      { letter: "B", text: "Centralise documents before contacting anyone", dest: "→ Page 6 – SharePoint", page: 6 }
+    ]
+  },
+
+  5: {
+    num: "Page 5",
+    title: "Teams",
+    icon: "💬",
+    band: "indigo",
+    tool: "Microsoft Teams",
+    egg: true,
+    story: [
+      "The project channel is already buzzing. You find a <strong>blue egg</strong> trembling under an overflowing conversation thread — pulled in every direction by file shares, task updates, and @mentions.",
+      "You create focused sub-channels, pin the brief as an announcement, and save key decisions using <strong>Saved Messages</strong>. The egg surfaces, finally visible and calm."
+    ],
+    quote: null,
+    tip: { tool: "Teams", text: "Use Saved Messages as a personal memory space — bookmark decisions, links, or updates so you can retrieve them instantly without scrolling back through threads." },
+    choices: [
+      { letter: "A", text: "Team aligned; centralise all documents in a shared space", dest: "→ Page 6 – SharePoint", page: 6 },
+      { letter: "B", text: "Sync your own files locally to work offline", dest: "→ Page 7 – OneDrive", page: 7 }
+    ]
+  },
+
+  6: {
+    num: "Page 6",
+    title: "SharePoint",
+    icon: "🗂️",
+    band: "green",
+    tool: "Microsoft SharePoint",
+    egg: true,
+    story: [
+      "You create the project document library on SharePoint. A <strong>pearl-grey egg</strong> rests on a blank page template, waiting for structure.",
+      "You apply a <strong>Page Template</strong> to standardise all deliverable pages across the team. The egg gains colour — consistency breathes life into it."
+    ],
+    quote: null,
+    tip: { tool: "SharePoint", text: "Create Page Templates so every team member starts from the same structure — faster creation and guaranteed visual consistency across all project pages." },
+    choices: [
+      { letter: "A", text: "Files are centralised; sync them to work in mobility", dest: "→ Page 7 – OneDrive", page: 7 },
+      { letter: "B", text: "Everything is in place; move straight to data analysis", dest: "→ Page 8 – Excel", page: 8 }
+    ]
+  },
+
+  7: {
+    num: "Page 7",
+    title: "OneDrive",
+    icon: "☁️",
+    band: "blue",
+    tool: "Microsoft OneDrive",
+    egg: true,
+    story: [
+      "You sync the SharePoint folder to your device. A <strong>turquoise egg</strong> trembles next to a file stuck in a version conflict — two colleagues edited the same document simultaneously.",
+      "You use the <strong>Restore</strong> feature to roll back to the correct version. The egg stabilises."
+    ],
+    quote: null,
+    tip: { tool: "OneDrive", text: "The Restore your OneDrive feature lets you roll back your entire folder to a previous point in time — not just one file, but everything at once." },
+    choices: [
+      { letter: "A", text: "Files are clean; analyse the project data", dest: "→ Page 8 – Excel", page: 8 },
+      { letter: "B", text: "Skip the analysis and write the report straight away", dest: "→ Page 13 – Bad Ending ⚠️", page: 13 }
+    ]
+  },
+
+  8: {
+    num: "Page 8",
+    title: "Excel",
+    icon: "📊",
+    band: "green",
+    tool: "Microsoft Excel",
+    egg: true,
+    story: [
+      "You open the M365 adoption data file: usage rates by tool, department, and month. A <strong>bright green egg</strong> spins between two pivot tables, overwhelmed by the raw numbers.",
+      "You structure the data with <strong>dynamic named ranges</strong>, build the key indicators, and clean the charts. The egg settles — the data now tells a clear story."
+    ],
+    quote: null,
+    tip: { tool: "Excel", text: "Use dynamic named ranges built with formulas (e.g. OFFSET + COUNTA) instead of structured tables when you need flexibility across complex formulas and cross-sheet references." },
+    choices: [
+      { letter: "A", text: "Data is ready; write the formal report", dest: "→ Page 9 – Word", page: 9 },
+      { letter: "B", text: "Share results with the team to co-build conclusions", dest: "→ Page 10 – Loop", page: 10 }
+    ]
+  },
+
+  9: {
+    num: "Page 9",
+    title: "Word",
+    icon: "📝",
+    band: "blue",
+    tool: "Microsoft Word",
+    egg: true,
+    story: [
+      "You open Word and draft the impact report. A <strong>navy-blue egg</strong> rests on the cover page, slightly crumpled by a careless copy-paste.",
+      "You apply heading styles and insert <strong>Quick Parts</strong> for recurring headers and standard clauses. The egg smooths out and aligns perfectly on the page."
+    ],
+    quote: null,
+    tip: { tool: "Word", text: "Quick Parts let you save and reinsert structured content blocks in one click — standard clauses, report headers, legal notices — essential for consistent deliverables." },
+    choices: [
+      { letter: "A", text: "Report drafted; share it with the team for collective review", dest: "→ Page 10 – Loop", page: 10 },
+      { letter: "B", text: "Report finalised; move straight to the presentation", dest: "→ Page 11 – PowerPoint", page: 11 }
+    ]
+  },
+
+  10: {
+    num: "Page 10",
+    title: "Loop",
+    icon: "🔄",
+    band: "violet",
+    tool: "Microsoft Loop",
+    egg: true,
+    story: [
+      "You create a shared Loop page for the team. A <strong>violet egg</strong> spins gently at the centre of a half-filled collaborative table.",
+      "Each person completes their section in real time — comments, adjustments, decisions land one after another. You use a <strong>Loop table</strong> as a lightweight decision tracker. The egg steadies the moment the last decision is validated collectively."
+    ],
+    quote: null,
+    tip: { tool: "Loop", text: "Use Loop tables as collaborative lightweight trackers — they sync live inside Teams, OneNote, and Outlook, so updates are visible everywhere without copy-pasting." },
+    choices: [
+      { letter: "A", text: "Conclusions aligned; build the final presentation", dest: "→ Page 11 – PowerPoint", page: 11 },
+      { letter: "B", text: "The team is aligned; publish results directly without a formal presentation", dest: "→ Page 15 – Collaborative Ending 🎉", page: 15 }
+    ]
+  },
+
+  11: {
+    num: "Page 11",
+    title: "PowerPoint",
+    icon: "🎨",
+    band: "orange",
+    tool: "Microsoft PowerPoint",
+    egg: true,
+    story: [
+      "You open PowerPoint and build the restitution deck. A <strong>red-orange egg</strong> vibrates on a slide overloaded with text.",
+      "You simplify, structure sections, and add <strong>Slide Zoom</strong> to enable non-linear navigation during the Q&A. The egg stops vibrating the moment the last slide clicks into place. The story is clear, the flow is right."
+    ],
+    quote: null,
+    tip: { tool: "PowerPoint", text: "Slide Zoom lets you build interactive presentations where you can jump freely between sections — perfect for restitutions with live audience questions." },
+    choices: [
+      { letter: "A", text: "The presentation is strong; create a video summary for those who could not attend", dest: "→ Page 12 – Clipchamp", page: 12 },
+      { letter: "B", text: "The presentation is enough; deliver the project", dest: "→ Page 14 – Solo Ending ✅", page: 14 }
+    ]
+  },
+
+  12: {
+    num: "Page 12",
+    title: "Clipchamp",
+    icon: "🎬",
+    band: "pink",
+    tool: "Microsoft Clipchamp",
+    egg: true,
+    story: [
+      "You open Clipchamp and assemble a <strong>3-minute video summary</strong>: extracts from the report, Excel data captures, animated PowerPoint slides. A <strong>bright pink egg</strong> flickers in the timeline, excited to be the final link in the chain.",
+      "You add <strong>semi-transparent shapes</strong> behind every text overlay to guarantee readability on any background. The egg erupts in digital confetti — the <strong>eleventh egg</strong> is recovered! 🎉"
+    ],
+    quote: null,
+    tip: { tool: "Clipchamp", text: "Place semi-transparent shapes behind on-screen text to ensure readability against any video background — simple but frequently overlooked." },
+    choices: [
+      { letter: "→", text: "All eleven eggs collected — complete the journey!", dest: "→ Page 15 – Collaborative Ending", page: 15 }
+    ]
+  },
+
+  13: {
+    num: "Page 13",
+    title: "Bad Ending",
+    icon: "🪹",
+    band: "gray",
+    tool: null,
+    egg: false,
+    ending: "bad",
+    story: [
+      "You skipped the data analysis and wrote the report on instinct. During the restitution, <strong>numbers are missing</strong>, conclusions feel vague, and the sponsor starts asking questions you cannot answer.",
+      "The basket is broken — the data and content eggs have <strong>dissolved into digital noise</strong>."
+    ],
+    quote: null,
+    tip: null,
+    choices: []
+  },
+
+  14: {
+    num: "Page 14",
+    title: "Solo Ending",
+    icon: "✅",
+    band: "orange",
+    tool: null,
+    egg: false,
+    ending: "solo",
+    story: [
+      "You delivered a <strong>solid report and a clear presentation</strong>. The project is complete. Eight of the eleven eggs are safely in your hands — a strong harvest.",
+      "But Bunny 365 notices that <strong>three eggs</strong> are still hiding in the collaborative tools, left behind because the team was not fully involved at the right moments."
+    ],
+    quote: '"You worked well. But together, you could have gone further."',
+    tip: null,
+    choices: []
+  },
+
+  15: {
+    num: "Page 15",
+    title: "Collaborative Ending",
+    icon: "🎉",
+    band: "green",
+    tool: null,
+    egg: false,
+    ending: "good",
+    story: [
+      "<strong>Eleven eggs recovered.</strong> The report was written, validated collectively via Loop, presented through PowerPoint, and broadcast as a video via Clipchamp.",
+      "Every tool played its role at the <strong>right moment</strong>. The ModernD Centre can continue building the skills of your colleagues across the world."
+    ],
+    quote: '"You did not just use the tools. You used them in the right order." 🐣',
+    tip: null,
+    choices: []
+  }
+};
+
+const TOOL_ORDER = [2,3,4,5,6,7,8,9,10,11,12]; // pages with eggs
+
+// ── STATE ───────────────────────────────────────────────────────────────────
+let currentPage = 1;
+let collectedEggs = new Set();
+let history = [];
+
+// ── INIT EGG DOTS ───────────────────────────────────────────────────────────
+function initEggDots() {
+  const c = document.getElementById('eggDots');
+  c.innerHTML = '';
+  TOOL_ORDER.forEach((p, i) => {
+    const d = document.createElement('span');
+    d.className = 'egg-dot' + (collectedEggs.has(p) ? ' collected' : '');
+    d.title = PAGES[p].title;
+    d.textContent = '🥚';
+    d.id = 'dot_' + p;
+    c.appendChild(d);
+  });
+}
+
+function updateProgress() {
+  const count = collectedEggs.size;
+  document.getElementById('eggCount').textContent = count + ' / 11';
+  document.getElementById('progressFill').style.width = (count / 11 * 100) + '%';
+  TOOL_ORDER.forEach(p => {
+    const d = document.getElementById('dot_' + p);
+    if (d) d.className = 'egg-dot' + (collectedEggs.has(p) ? ' collected' : '');
+  });
+  // bump counter
+  const ec = document.getElementById('eggCount');
+  ec.classList.add('bump');
+  setTimeout(() => ec.classList.remove('bump'), 400);
+}
+
+function updateHistory() {
+  const bar = document.getElementById('historyBar');
+  bar.innerHTML = history.map((p, i) => {
+    const pg = PAGES[p];
+    return `<span class="history-crumb">${pg.icon} ${pg.title}</span>${i < history.length - 1 ? '<span class="crumb-sep">›</span>' : ''}`;
+  }).join('');
+}
+
+// ── RENDER ──────────────────────────────────────────────────────────────────
+function renderPage(pageId) {
+  const pg = PAGES[pageId];
+  if (!pg) return;
+
+  // collect egg
+  if (pg.egg && !collectedEggs.has(pageId)) {
+    collectedEggs.add(pageId);
+    updateProgress();
+  }
+
+  // history
+  if (!history.length || history[history.length - 1] !== pageId) {
+    history.push(pageId);
+    updateHistory();
+  }
+
+  // build HTML
+  let html = `<div class="page-card${pg.ending ? ' ending-' + pg.ending : ''}">`;
+
+  // band
+  html += `<div class="page-band ${pg.band}">
+    <div class="page-num">${pg.num}</div>
+    <div class="page-title">${pg.icon} ${pg.title}</div>
+    ${pg.tool ? `<div class="page-tool-badge">🏢 ${pg.tool} &nbsp;·&nbsp; Hager Group</div>` : ''}
+  </div>`;
+
+  html += `<div class="page-body">`;
+
+  // ending banner
+  if (pg.ending) {
+    const msgs = {
+      bad: '⚠️ You took a shortcut — and the project suffered.',
+      solo: '✅ A complete solo delivery — well done, but not the full story.',
+      good: '🎊 Perfect! You used every tool in the right order.'
+    };
+    html += `<div class="ending-banner">${msgs[pg.ending]}</div>`;
+  }
+
+  // story
+  pg.story.forEach(s => {
+    html += `<p class="story-text">${s}</p>`;
+  });
+
+  // quote
+  if (pg.quote) {
+    html += `<div class="story-quote">${pg.quote}</div>`;
+  }
+
+  // tip
+  if (pg.tip) {
+    html += `<div class="tip-box">
+      <div class="tip-icon">💡</div>
+      <div class="tip-content">
+        <div class="tip-label">Tip · <span class="tip-tool">${pg.tip.tool}</span></div>
+        <div class="tip-text">${pg.tip.text}</div>
+      </div>
+    </div>`;
+  }
+
+  // choices or endings
+  if (pg.choices && pg.choices.length > 0) {
+    html += `<hr class="divider"><div class="choices-label">Your choices</div><div class="choices">`;
+    pg.choices.forEach(c => {
+      html += `<button class="choice-btn" onclick="goTo(${c.page})">
+        <div class="choice-letter">${c.letter}</div>
+        <div class="choice-body">
+          <div class="choice-text">${c.text}</div>
+          <div class="choice-dest">${c.dest}</div>
+        </div>
+      </button>`;
+    });
+    html += `</div>`;
+  }
+
+  // ending actions
+  if (pg.ending === 'bad') {
+    html += `<button class="back-btn" onclick="goTo(7)">← Go back to Page 7 – OneDrive</button>`;
+  }
+  if (pg.ending === 'solo' || pg.ending === 'good') {
+    // summary table
+    html += `<hr class="divider">
+    <div class="choices-label">All 11 skills collected</div>
+    <table class="summary-table">
+      <thead><tr><th>#</th><th>Tool</th><th>Tip</th></tr></thead><tbody>`;
+    TOOL_ORDER.forEach((p, i) => {
+      const tp = PAGES[p];
+      const collected = collectedEggs.has(p);
+      html += `<tr>
+        <td>${i + 1}</td>
+        <td><span class="tool-chip">${tp.icon} ${tp.title}</span></td>
+        <td style="color:${collected ? '#374151' : '#9ca3af'}">${tp.tip ? tp.tip.text : '—'}</td>
+      </tr>`;
+    });
+    html += `</tbody></table>`;
+    html += `<br><button class="restart-btn" onclick="restart()">🐣 Start again</button>`;
+  }
+
+  html += `</div></div>`;
+
+  const container = document.getElementById('pageContainer');
+  container.innerHTML = html;
+  container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goTo(pageId) {
+  currentPage = pageId;
+  renderPage(pageId);
+}
+
+function restart() {
+  currentPage = 1;
+  collectedEggs = new Set();
+  history = [];
+  initEggDots();
+  updateProgress();
+  updateHistory();
+  renderPage(1);
+}
+
+// ── BOOT ────────────────────────────────────────────────────────────────────
+initEggDots();
+updateProgress();
+renderPage(1);
+</script>
+</body>
+</html>
