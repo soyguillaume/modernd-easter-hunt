@@ -63,9 +63,50 @@
     height: 100%; background: linear-gradient(90deg, #0078c3, #8ccdfa);
     border-radius: 999px; transition: width 0.6s cubic-bezier(.4,0,.2,1); width: 0%;
   }
-  .progress-eggs { display: flex; gap: 4px; }
-  .egg-dot { font-size: 16px; filter: grayscale(1) opacity(0.3); transition: filter 0.4s, transform 0.3s; }
-  .egg-dot.collected { filter: grayscale(0) opacity(1); transform: scale(1.15); }
+  .progress-eggs { display: flex; gap: 6px; align-items: center; }
+
+  /* Colored egg dots */
+  .egg-dot {
+    width: 20px; height: 20px; border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    border: 2px solid rgba(0,0,0,0.10);
+    display: inline-block;
+    transition: transform 0.35s cubic-bezier(.4,0,.2,1), box-shadow 0.35s, opacity 0.35s;
+    opacity: 0.22;
+    filter: saturate(0.2);
+    cursor: default;
+    position: relative;
+  }
+  .egg-dot.collected {
+    opacity: 1;
+    filter: saturate(1);
+    transform: scale(1.18) translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.18);
+  }
+  .egg-dot.collected::after {
+    content: '✓';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 900;
+    color: rgba(255,255,255,0.85);
+    font-family: 'Nunito', sans-serif;
+  }
+
+  /* Individual egg colors */
+  .egg-dot[data-tool="2"]  { background: linear-gradient(145deg, #f59e0b, #fbbf24); } /* Outlook – orange */
+  .egg-dot[data-tool="3"]  { background: linear-gradient(145deg, #7c3aed, #a78bfa); } /* OneNote – violet */
+  .egg-dot[data-tool="4"]  { background: linear-gradient(145deg, #059669, #34d399); } /* Planner – green */
+  .egg-dot[data-tool="5"]  { background: linear-gradient(145deg, #0078c3, #38bdf8); } /* Teams – blue */
+  .egg-dot[data-tool="6"]  { background: linear-gradient(145deg, #9ca3af, #d1d5db); } /* SharePoint – gris perle */
+  .egg-dot[data-tool="7"]  { background: linear-gradient(145deg, #0d9488, #2dd4bf); } /* OneDrive – turquoise */
+  .egg-dot[data-tool="8"]  { background: linear-gradient(145deg, #65a30d, #a3e635); } /* Excel – vert vif */
+  .egg-dot[data-tool="9"]  { background: linear-gradient(145deg, #1e3a5f, #2563eb); } /* Word – bleu marine */
+  .egg-dot[data-tool="10"] { background: linear-gradient(145deg, #6d28d9, #c084fc); } /* Loop – violet */
+  .egg-dot[data-tool="11"] { background: linear-gradient(145deg, #ea580c, #fb923c); } /* PowerPoint – rouge-orange */
+  .egg-dot[data-tool="12"] { background: linear-gradient(145deg, #be185d, #f472b6); } /* Clipchamp – rose */
 
   .page-card {
     background: var(--card); border-radius: var(--radius);
@@ -96,6 +137,17 @@
     background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.25);
     color: white; font-size: 12px; font-weight: 600; padding: 4px 12px;
     border-radius: 999px; margin-top: 10px;
+  }
+
+  /* Egg color badge in tool pages */
+  .egg-badge {
+    display: inline-flex; align-items: center; gap: 7px; margin-top: 10px; margin-left: 6px;
+    background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.28);
+    padding: 4px 12px; border-radius: 999px; font-size: 12px; font-weight: 700; color: white;
+  }
+  .egg-badge-dot {
+    width: 12px; height: 12px; border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    display: inline-block; flex-shrink: 0;
   }
 
   .page-body { padding: 28px 32px; }
@@ -147,7 +199,6 @@
   .choice-text { font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.5; margin-bottom: 2px; }
   .choice-dest { font-size: 12px; color: var(--text-muted); font-weight: 400; }
 
-  /* ── ILLUSTRATION ── */
   .page-illustration {
     width: 100%; max-height: 340px; object-fit: cover;
     border-radius: 14px; margin-top: 24px; display: block;
@@ -233,6 +284,21 @@
 
 <script>
 const B = "https://hagergroup.sharepoint.com/sites/ModernDCentre/SiteAssets/Easter%20Game%20Images/";
+
+// eggColor: CSS gradient string for each tool page
+const EGG_COLORS = {
+  2:  { grad: "linear-gradient(145deg, #f59e0b, #fbbf24)", label: "orange" },
+  3:  { grad: "linear-gradient(145deg, #7c3aed, #a78bfa)", label: "violet" },
+  4:  { grad: "linear-gradient(145deg, #059669, #34d399)", label: "vert" },
+  5:  { grad: "linear-gradient(145deg, #0078c3, #38bdf8)", label: "bleu" },
+  6:  { grad: "linear-gradient(145deg, #9ca3af, #d1d5db)", label: "gris perle" },
+  7:  { grad: "linear-gradient(145deg, #0d9488, #2dd4bf)", label: "turquoise" },
+  8:  { grad: "linear-gradient(145deg, #65a30d, #a3e635)", label: "vert vif" },
+  9:  { grad: "linear-gradient(145deg, #1e3a5f, #2563eb)", label: "bleu marine" },
+  10: { grad: "linear-gradient(145deg, #6d28d9, #c084fc)", label: "violet" },
+  11: { grad: "linear-gradient(145deg, #ea580c, #fb923c)", label: "rouge-orangé" },
+  12: { grad: "linear-gradient(145deg, #be185d, #f472b6)", label: "rose vif" },
+};
 
 const PAGES = {
   1: {
@@ -320,6 +386,11 @@ const PAGES = {
       {letter:"B", text:"Everything is in place; move straight to data analysis", dest:"→ Excel", page:8}
     ]
   },
+
+  /* ── PAGE 7 : OneDrive ──────────────────────────────────────────────────
+     SWAP: A = Bad Ending ⚠️  |  B = Excel ✅
+     (avant: A = Excel, B = Bad Ending)
+  ───────────────────────────────────────────────────────────────────────── */
   7: {
     title:"OneDrive", icon:"☁️", band:"blue", tool:"Microsoft OneDrive", egg:true,
     image: B+"OneDrive.png",
@@ -330,10 +401,11 @@ const PAGES = {
     quote:null,
     tip:{tool:"OneDrive", text:"The Restore your OneDrive feature lets you roll back your entire folder to a previous point in time — not just one file, but everything at once.", link:"https://hagergroup.sharepoint.com/sites/ModernDCentre/SitePages/Easter-tip---OneDrive---Restore-your-entire-OneDrive-to-a-previous-point-in-time.aspx"},
     choices:[
-      {letter:"A", text:"Files are clean; analyse the project data", dest:"→ Excel", page:8},
-      {letter:"B", text:"Skip the analysis and write the report straight away", dest:"→ Bad Ending ⚠️", page:13}
+      {letter:"A", text:"Skip the analysis and write the report straight away", dest:"→ Bad Ending ⚠️", page:13},
+      {letter:"B", text:"Files are clean; analyse the project data", dest:"→ Excel", page:8}
     ]
   },
+
   8: {
     title:"Excel", icon:"📊", band:"green", tool:"Microsoft Excel", egg:true,
     image: B+"Excel.png",
@@ -362,6 +434,11 @@ const PAGES = {
       {letter:"B", text:"Report finalised; move straight to the presentation", dest:"→ PowerPoint", page:11}
     ]
   },
+
+  /* ── PAGE 10 : Loop ─────────────────────────────────────────────────────
+     SWAP: A = Collaborative Ending 🎉 (early)  |  B = PowerPoint ✅
+     (avant: A = PowerPoint, B = Collaborative Ending)
+  ───────────────────────────────────────────────────────────────────────── */
   10: {
     title:"Loop", icon:"🔄", band:"violet", tool:"Microsoft Loop", egg:true,
     image: B+"Loop.png",
@@ -372,10 +449,15 @@ const PAGES = {
     quote:null,
     tip:{tool:"Loop", text:"Use Loop tables as collaborative lightweight trackers — they sync live inside Teams, OneNote, and Outlook, so updates are visible everywhere without copy-pasting.", link:"https://hagergroup.sharepoint.com/sites/ModernDCentre/SitePages/Easter-tip---Loop---Use-Loop-tables-as-lightweight-collaborative-trackers-(not-just-notes).aspx"},
     choices:[
-      {letter:"A", text:"Conclusions aligned; build the final presentation", dest:"→ PowerPoint", page:11},
-      {letter:"B", text:"The team is aligned; publish results directly without a formal presentation", dest:"→ Collaborative Ending 🎉", page:15}
+      {letter:"A", text:"The team is aligned; publish results directly without a formal presentation", dest:"→ Collaborative Ending 🎉", page:15},
+      {letter:"B", text:"Conclusions aligned; build the final presentation", dest:"→ PowerPoint", page:11}
     ]
   },
+
+  /* ── PAGE 11 : PowerPoint ───────────────────────────────────────────────
+     SWAP: A = Solo Ending ✅  |  B = Clipchamp ✅
+     (avant: A = Clipchamp, B = Solo Ending)
+  ───────────────────────────────────────────────────────────────────────── */
   11: {
     title:"PowerPoint", icon:"🎨", band:"orange", tool:"Microsoft PowerPoint", egg:true,
     image: B+"PowerPoint.png",
@@ -386,10 +468,11 @@ const PAGES = {
     quote:null,
     tip:{tool:"PowerPoint", text:"Slide Zoom lets you build interactive presentations where you can jump freely between sections — perfect for restitutions with live audience questions.", link:"https://hagergroup.sharepoint.com/sites/ModernDCentre/SitePages/Easter-tip---PowerPoint---Use-Slide-Zoom-to-create-non%E2%80%91linear-presentations.aspx"},
     choices:[
-      {letter:"A", text:"The presentation is strong; create a video summary for those who could not attend", dest:"→ Clipchamp", page:12},
-      {letter:"B", text:"The presentation is enough; deliver the project", dest:"→ Solo Ending ✅", page:14}
+      {letter:"A", text:"The presentation is enough; deliver the project", dest:"→ Solo Ending ✅", page:14},
+      {letter:"B", text:"Create a video summary for those who could not attend", dest:"→ Clipchamp", page:12}
     ]
   },
+
   12: {
     title:"Clipchamp", icon:"🎬", band:"pink", tool:"Microsoft Clipchamp", egg:true,
     image: B+"Clipchamp.png",
@@ -416,8 +499,8 @@ const PAGES = {
     title:"Solo Ending", icon:"✅", band:"orange", tool:null, egg:false, ending:"solo",
     image: B+"hager-solo-ending-basket.png",
     story:[
-      "You delivered a <strong>solid report and a clear presentation</strong>. The project is complete. Eight of the eleven eggs are safely in your hands — a strong harvest.",
-      "But Bunny 365 notices that <strong>three eggs</strong> are still hiding in the collaborative tools, left behind because the team was not fully involved at the right moments."
+      "You delivered a <strong>solid report and a clear presentation</strong>. The project is complete.",
+      "But Bunny 365 notices that some eggs are still hiding in the collaborative tools, left behind because the team was not fully involved at the right moments."
     ],
     quote:'"You worked well. But together, you could have gone further."',
     tip:null, choices:[]
@@ -426,7 +509,7 @@ const PAGES = {
     title:"Collaborative Ending", icon:"🎉", band:"green", tool:null, egg:false, ending:"good",
     image: B+"hager-collaborative-ending-basket.png",
     story:[
-      "<strong>Eleven eggs recovered.</strong> The report was written, validated collectively via Loop, presented through PowerPoint, and broadcast as a video via Clipchamp.",
+      "The report was written, validated collectively via Loop, presented through PowerPoint, and broadcast as a video via Clipchamp.",
       "Every tool played its role at the <strong>right moment</strong>. The ModernD Centre can continue building the skills of your colleagues across the world."
     ],
     quote:'"You did not just use the tools. You used them in the right order." 🐣',
@@ -442,7 +525,9 @@ function initEggDots(){
   TOOL_ORDER.forEach(p=>{
     const d=document.createElement('span');
     d.className='egg-dot'+(collectedEggs.has(p)?' collected':'');
-    d.title=PAGES[p].title; d.textContent='🥚'; d.id='dot_'+p; c.appendChild(d);
+    d.title=PAGES[p].title+' (œuf '+EGG_COLORS[p].label+')';
+    d.setAttribute('data-tool', p);
+    c.appendChild(d);
   });
 }
 
@@ -451,7 +536,7 @@ function updateProgress(){
   document.getElementById('eggCount').textContent=count+' / 11';
   document.getElementById('progressFill').style.width=(count/11*100)+'%';
   TOOL_ORDER.forEach(p=>{
-    const d=document.getElementById('dot_'+p);
+    const d=document.querySelector('.egg-dot[data-tool="'+p+'"]');
     if(d) d.className='egg-dot'+(collectedEggs.has(p)?' collected':'');
   });
   const ec=document.getElementById('eggCount');
@@ -474,15 +559,25 @@ function renderPage(pageId){
 
   let html=`<div class="page-card${pg.ending?' ending-'+pg.ending:''}">`;
 
+  // Header band
   html+=`<div class="page-band ${pg.band}">
     <div class="page-title">${pg.icon} ${pg.title}</div>
     ${pg.tool?`<div class="page-tool-badge">🏢 ${pg.tool} &nbsp;·&nbsp; Hager Group</div>`:''}
+    ${pg.egg && EGG_COLORS[pageId] ? `<div class="egg-badge"><span class="egg-badge-dot" style="background:${EGG_COLORS[pageId].grad}"></span>Œuf ${EGG_COLORS[pageId].label} récupéré !</div>` : ''}
   </div>`;
 
   html+=`<div class="page-body">`;
 
+  // Ending banner — shows egg count dynamically
   if(pg.ending){
-    const msgs={bad:'⚠️ You took a shortcut — and the project suffered.',solo:'✅ A complete solo delivery — well done, but not the full story.',good:'🎊 Perfect! You used every tool in the right order.'};
+    const count = collectedEggs.size;
+    const msgs = {
+      bad: `⚠️ You took a shortcut — and the project suffered. You collected <strong>${count} / 11</strong> eggs.`,
+      solo: `✅ A complete solo delivery — well done. You collected <strong>${count} / 11</strong> eggs. Could you find the others?`,
+      good: count === 11
+        ? `🎊 All <strong>11 / 11</strong> eggs collected! You used every tool in the right order.`
+        : `🎉 Journey complete! You collected <strong>${count} / 11</strong> eggs — try again to find all eleven.`
+    };
     html+=`<div class="ending-banner">${msgs[pg.ending]}</div>`;
   }
 
@@ -514,7 +609,6 @@ function renderPage(pageId){
     html+=`</div>`;
   }
 
-  // IMAGE — always after choices, before ending actions
   if(pg.image){
     html+=`<img class="page-illustration" src="${pg.image}" alt="${pg.title}" onerror="this.style.display='none'" />`;
   }
@@ -524,14 +618,18 @@ function renderPage(pageId){
   }
 
   if(pg.ending==='solo' || pg.ending==='good'){
-    html+=`<hr class="divider"><div class="choices-label">All 11 skills collected</div>
+    html+=`<hr class="divider"><div class="choices-label">All 11 skills — summary</div>
     <table class="summary-table">
       <thead><tr><th>#</th><th>Tool</th><th>Tip</th><th>Link</th></tr></thead><tbody>`;
     TOOL_ORDER.forEach((p,i)=>{
       const tp=PAGES[p]; const collected=collectedEggs.has(p);
+      const ec = EGG_COLORS[p];
       html+=`<tr>
-        <td>${i+1}</td>
-        <td><span class="tool-chip">${tp.icon} ${tp.title}</span></td>
+        <td style="display:flex;align-items:center;gap:8px;">
+          <span style="width:14px;height:14px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:${ec.grad};display:inline-block;flex-shrink:0;opacity:${collected?1:0.3}"></span>
+          ${i+1}
+        </td>
+        <td><span class="tool-chip" style="opacity:${collected?1:0.45}">${tp.icon} ${tp.title}</span></td>
         <td style="color:${collected?'#374151':'#9ca3af'}">${tp.tip?tp.tip.text:'—'}</td>
         <td>${tp.tip&&tp.tip.link?`<a href="${tp.tip.link}" target="_blank" style="display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700;color:#0078c3;text-decoration:none;background:#dcf0ff;padding:4px 12px;border-radius:999px;white-space:nowrap;" onmouseover="this.style.background='#0078c3';this.style.color='white'" onmouseout="this.style.background='#dcf0ff';this.style.color='#0078c3'">Learn more →</a>`:'—'}</td>
       </tr>`;
