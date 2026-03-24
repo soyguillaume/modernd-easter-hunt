@@ -96,17 +96,17 @@
   }
 
   /* Individual egg colors */
-  .egg-dot[data-tool="2"]  { background: linear-gradient(145deg, #f59e0b, #fbbf24); } /* Outlook – orange */
-  .egg-dot[data-tool="3"]  { background: linear-gradient(145deg, #7c3aed, #a78bfa); } /* OneNote – violet */
-  .egg-dot[data-tool="4"]  { background: linear-gradient(145deg, #059669, #34d399); } /* Planner – green */
-  .egg-dot[data-tool="5"]  { background: linear-gradient(145deg, #0078c3, #38bdf8); } /* Teams – blue */
-  .egg-dot[data-tool="6"]  { background: linear-gradient(145deg, #9ca3af, #d1d5db); } /* SharePoint – gris perle */
-  .egg-dot[data-tool="7"]  { background: linear-gradient(145deg, #0d9488, #2dd4bf); } /* OneDrive – turquoise */
-  .egg-dot[data-tool="8"]  { background: linear-gradient(145deg, #65a30d, #a3e635); } /* Excel – vert vif */
-  .egg-dot[data-tool="9"]  { background: linear-gradient(145deg, #1e3a5f, #2563eb); } /* Word – bleu marine */
-  .egg-dot[data-tool="10"] { background: linear-gradient(145deg, #6d28d9, #c084fc); } /* Loop – violet */
-  .egg-dot[data-tool="11"] { background: linear-gradient(145deg, #ea580c, #fb923c); } /* PowerPoint – rouge-orange */
-  .egg-dot[data-tool="12"] { background: linear-gradient(145deg, #be185d, #f472b6); } /* Clipchamp – rose */
+  .egg-dot[data-tool="2"]  { background: linear-gradient(145deg, #f59e0b, #fbbf24); }
+  .egg-dot[data-tool="3"]  { background: linear-gradient(145deg, #7c3aed, #a78bfa); }
+  .egg-dot[data-tool="4"]  { background: linear-gradient(145deg, #059669, #34d399); }
+  .egg-dot[data-tool="5"]  { background: linear-gradient(145deg, #0078c3, #38bdf8); }
+  .egg-dot[data-tool="6"]  { background: linear-gradient(145deg, #9ca3af, #d1d5db); }
+  .egg-dot[data-tool="7"]  { background: linear-gradient(145deg, #0d9488, #2dd4bf); }
+  .egg-dot[data-tool="8"]  { background: linear-gradient(145deg, #65a30d, #a3e635); }
+  .egg-dot[data-tool="9"]  { background: linear-gradient(145deg, #1e3a5f, #2563eb); }
+  .egg-dot[data-tool="10"] { background: linear-gradient(145deg, #6d28d9, #c084fc); }
+  .egg-dot[data-tool="11"] { background: linear-gradient(145deg, #ea580c, #fb923c); }
+  .egg-dot[data-tool="12"] { background: linear-gradient(145deg, #be185d, #f472b6); }
 
   .page-card {
     background: var(--card); border-radius: var(--radius);
@@ -115,21 +115,15 @@
   }
   @keyframes slideIn { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
 
-  .page-band { padding: 28px 32px 22px; position: relative; overflow: hidden; }
+  /* Page band — base styles only, gradient injected via JS */
+  .page-band {
+    padding: 28px 32px 22px; position: relative; overflow: hidden;
+    transition: background 0.4s ease;
+  }
   .page-band::after {
     content: ''; position: absolute; right: -30px; top: -30px;
     width: 160px; height: 160px; border-radius: 50%; background: rgba(255,255,255,0.08);
   }
-  .page-band.purple { background: linear-gradient(135deg, #002841, #004673); }
-  .page-band.red    { background: linear-gradient(135deg, #c0392b, #e2001a); }
-  .page-band.green  { background: linear-gradient(135deg, #065f46, #059669); }
-  .page-band.blue   { background: linear-gradient(135deg, #004673, #0078c3); }
-  .page-band.teal   { background: linear-gradient(135deg, #004673, #0078c3); }
-  .page-band.orange { background: linear-gradient(135deg, #92400e, #f59e0b); }
-  .page-band.indigo { background: linear-gradient(135deg, #002841, #0078c3); }
-  .page-band.violet { background: linear-gradient(135deg, #002841, #004673); }
-  .page-band.pink   { background: linear-gradient(135deg, #831843, #ec4899); }
-  .page-band.gray   { background: linear-gradient(135deg, #374151, #6b7280); }
 
   .page-title { font-family: 'Nunito', sans-serif; font-size: 26px; font-weight: 900; color: white; display: flex; align-items: center; gap: 10px; line-height: 1.2; }
   .page-tool-badge {
@@ -285,19 +279,33 @@
 <script>
 const B = "https://hagergroup.sharepoint.com/sites/ModernDCentre/SiteAssets/Easter%20Game%20Images/";
 
-// eggColor: CSS gradient string for each tool page
+// EGG_COLORS: gradient for each tool page (used for egg dots AND banner background)
 const EGG_COLORS = {
-  2:  { grad: "linear-gradient(145deg, #f59e0b, #fbbf24)", label: "orange" },
-  3:  { grad: "linear-gradient(145deg, #7c3aed, #a78bfa)", label: "violet" },
-  4:  { grad: "linear-gradient(145deg, #059669, #34d399)", label: "vert" },
-  5:  { grad: "linear-gradient(145deg, #0078c3, #38bdf8)", label: "bleu" },
-  6:  { grad: "linear-gradient(145deg, #9ca3af, #d1d5db)", label: "gris perle" },
-  7:  { grad: "linear-gradient(145deg, #0d9488, #2dd4bf)", label: "turquoise" },
-  8:  { grad: "linear-gradient(145deg, #65a30d, #a3e635)", label: "vert vif" },
-  9:  { grad: "linear-gradient(145deg, #1e3a5f, #2563eb)", label: "bleu marine" },
-  10: { grad: "linear-gradient(145deg, #6d28d9, #c084fc)", label: "violet" },
-  11: { grad: "linear-gradient(145deg, #ea580c, #fb923c)", label: "rouge-orangé" },
-  12: { grad: "linear-gradient(145deg, #be185d, #f472b6)", label: "rose vif" },
+  2:  { grad: "linear-gradient(145deg, #f59e0b, #fbbf24)", bandGrad: "linear-gradient(135deg, #b45309, #f59e0b)", label: "orange" },
+  3:  { grad: "linear-gradient(145deg, #7c3aed, #a78bfa)", bandGrad: "linear-gradient(135deg, #4c1d95, #7c3aed)", label: "violet" },
+  4:  { grad: "linear-gradient(145deg, #059669, #34d399)", bandGrad: "linear-gradient(135deg, #064e3b, #059669)", label: "vert" },
+  5:  { grad: "linear-gradient(145deg, #0078c3, #38bdf8)", bandGrad: "linear-gradient(135deg, #004673, #0078c3)", label: "bleu" },
+  6:  { grad: "linear-gradient(145deg, #9ca3af, #d1d5db)", bandGrad: "linear-gradient(135deg, #374151, #6b7280)", label: "gris perle" },
+  7:  { grad: "linear-gradient(145deg, #0d9488, #2dd4bf)", bandGrad: "linear-gradient(135deg, #134e4a, #0d9488)", label: "turquoise" },
+  8:  { grad: "linear-gradient(145deg, #65a30d, #a3e635)", bandGrad: "linear-gradient(135deg, #3f6212, #65a30d)", label: "vert vif" },
+  9:  { grad: "linear-gradient(145deg, #1e3a5f, #2563eb)", bandGrad: "linear-gradient(135deg, #1e1b4b, #1e3a5f)", label: "bleu marine" },
+  10: { grad: "linear-gradient(145deg, #6d28d9, #c084fc)", bandGrad: "linear-gradient(135deg, #3b0764, #6d28d9)", label: "violet" },
+  11: { grad: "linear-gradient(145deg, #ea580c, #fb923c)", bandGrad: "linear-gradient(135deg, #7c2d12, #ea580c)", label: "rouge-orangé" },
+  12: { grad: "linear-gradient(145deg, #be185d, #f472b6)", bandGrad: "linear-gradient(135deg, #831843, #be185d)", label: "rose vif" },
+};
+
+// Fallback band gradients for non-egg pages (page 1, endings)
+const BAND_FALLBACK = {
+  purple: "linear-gradient(135deg, #002841, #004673)",
+  red:    "linear-gradient(135deg, #c0392b, #e2001a)",
+  green:  "linear-gradient(135deg, #065f46, #059669)",
+  blue:   "linear-gradient(135deg, #004673, #0078c3)",
+  teal:   "linear-gradient(135deg, #004673, #0078c3)",
+  orange: "linear-gradient(135deg, #92400e, #f59e0b)",
+  indigo: "linear-gradient(135deg, #002841, #0078c3)",
+  violet: "linear-gradient(135deg, #002841, #004673)",
+  pink:   "linear-gradient(135deg, #831843, #ec4899)",
+  gray:   "linear-gradient(135deg, #374151, #6b7280)",
 };
 
 const PAGES = {
@@ -386,11 +394,6 @@ const PAGES = {
       {letter:"B", text:"Everything is in place; move straight to data analysis", dest:"→ Excel", page:8}
     ]
   },
-
-  /* ── PAGE 7 : OneDrive ──────────────────────────────────────────────────
-     SWAP: A = Bad Ending ⚠️  |  B = Excel ✅
-     (avant: A = Excel, B = Bad Ending)
-  ───────────────────────────────────────────────────────────────────────── */
   7: {
     title:"OneDrive", icon:"☁️", band:"blue", tool:"Microsoft OneDrive", egg:true,
     image: B+"OneDrive.png",
@@ -405,7 +408,6 @@ const PAGES = {
       {letter:"B", text:"Files are clean; analyse the project data", dest:"→ Excel", page:8}
     ]
   },
-
   8: {
     title:"Excel", icon:"📊", band:"green", tool:"Microsoft Excel", egg:true,
     image: B+"Excel.png",
@@ -434,11 +436,6 @@ const PAGES = {
       {letter:"B", text:"Report finalised; move straight to the presentation", dest:"→ PowerPoint", page:11}
     ]
   },
-
-  /* ── PAGE 10 : Loop ─────────────────────────────────────────────────────
-     SWAP: A = Collaborative Ending 🎉 (early)  |  B = PowerPoint ✅
-     (avant: A = PowerPoint, B = Collaborative Ending)
-  ───────────────────────────────────────────────────────────────────────── */
   10: {
     title:"Loop", icon:"🔄", band:"violet", tool:"Microsoft Loop", egg:true,
     image: B+"Loop.png",
@@ -453,11 +450,6 @@ const PAGES = {
       {letter:"B", text:"Conclusions aligned; build the final presentation", dest:"→ PowerPoint", page:11}
     ]
   },
-
-  /* ── PAGE 11 : PowerPoint ───────────────────────────────────────────────
-     SWAP: A = Solo Ending ✅  |  B = Clipchamp ✅
-     (avant: A = Clipchamp, B = Solo Ending)
-  ───────────────────────────────────────────────────────────────────────── */
   11: {
     title:"PowerPoint", icon:"🎨", band:"orange", tool:"Microsoft PowerPoint", egg:true,
     image: B+"PowerPoint.png",
@@ -472,7 +464,6 @@ const PAGES = {
       {letter:"B", text:"Create a video summary for those who could not attend", dest:"→ Clipchamp", page:12}
     ]
   },
-
   12: {
     title:"Clipchamp", icon:"🎬", band:"pink", tool:"Microsoft Clipchamp", egg:true,
     image: B+"Clipchamp.png",
@@ -551,6 +542,16 @@ function updateHistory(){
   }).join('');
 }
 
+function getBandStyle(pageId) {
+  const pg = PAGES[pageId];
+  // If this page has an egg, use the egg's own gradient for the banner
+  if (pg.egg && EGG_COLORS[pageId]) {
+    return `background: ${EGG_COLORS[pageId].bandGrad};`;
+  }
+  // Otherwise fall back to the predefined band color
+  return `background: ${BAND_FALLBACK[pg.band] || BAND_FALLBACK['purple']};`;
+}
+
 function renderPage(pageId){
   const pg=PAGES[pageId]; if(!pg) return;
 
@@ -559,8 +560,9 @@ function renderPage(pageId){
 
   let html=`<div class="page-card${pg.ending?' ending-'+pg.ending:''}">`;
 
-  // Header band
-  html+=`<div class="page-band ${pg.band}">
+  // Header band — gradient comes from egg color when available
+  const bandStyle = getBandStyle(pageId);
+  html+=`<div class="page-band" style="${bandStyle}">
     <div class="page-title">${pg.icon} ${pg.title}</div>
     ${pg.tool?`<div class="page-tool-badge">🏢 ${pg.tool} &nbsp;·&nbsp; Hager Group</div>`:''}
     ${pg.egg && EGG_COLORS[pageId] ? `<div class="egg-badge"><span class="egg-badge-dot" style="background:${EGG_COLORS[pageId].grad}"></span>Œuf ${EGG_COLORS[pageId].label} récupéré !</div>` : ''}
@@ -568,7 +570,7 @@ function renderPage(pageId){
 
   html+=`<div class="page-body">`;
 
-  // Ending banner — shows egg count dynamically
+  // Ending banner
   if(pg.ending){
     const count = collectedEggs.size;
     const msgs = {
